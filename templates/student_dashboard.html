@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script
+        src="https://www.paypal.com/sdk/js?client-id=AYOqp3mELxzbn4OXvEzqUmYPcfAIUHob_Ca9aB4n6yRhJQ-ZMzXtXRTbyAjLoiv2SkHeHwVjgX2mPjYF"></script>
+    <style>
+        /* Custom CSS for this page */
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            flex: 1;
+            margin-top: 20px;
+        }
+
+        header {
+            background-color: #000000;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        nav li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        .course-card {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px;
+            background-color: #fff;
+            position: relative;
+        }
+
+        .course-title {
+            font-weight: bold;
+            font-size: 18px;
+            cursor: pointer;
+            /* Make the title clickable */
+        }
+
+        .course-description {
+            margin-top: 10px;
+        }
+
+        .course-price {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .subscribe-button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .subscribe-button:hover {
+            background-color: #0056b3;
+        }
+
+        .student-courses {
+            display: none;
+        }
+
+        .student-course-title {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .student-course-link {
+            margin-top: 5px;
+        }
+
+        .search-bar {
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Welcome to the Edusparkle-Learn and sparkle</h1>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('subscribed') }}">subscribed</a></li>
+                <li><a href="{{ url_for('home') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Add a search bar to search for courses -->
+        <input type="text" class="search-bar" placeholder="Search for courses..." oninput="searchCourses(this.value)">
+
+       <div class="course-card" data-course-id="1">
+            <div class="course-title" onclick="toggleCourseInfo(1)">Core Java</div>
+            <div class="course-description">
+                <span id="description-1">Java is a popular, high-level programming language known for its platform independence, strong object-oriented features, and extensive standard library. It's widely used for developing a wide range of applications, from web and mobile apps to desktop software. Java applications run on the Java Virtual Machine (JVM), providing portability across different platforms.</span>
+            </div>
+            <div class="course-price">
+                <span id="price-3">₹2000</span>
+            </div>
+
+            <button class="btn btn-secondary subscribe-button" onclick="initiateStripePayment(1, 'Core Java', 2000)">Pay</button>
+    </div>
+
+
+        <!-- Repeat similar structure for other courses -->
+        <div class="course-card" data-course-id="2">
+            <div class="course-title" onclick="toggleCourseInfo(2)">Advance java-J2EE</div>
+            <div class="course-description">
+                <span id="description-2">J2EE (Java 2 Platform, Enterprise Edition) is an older version of Java's enterprise development platform, now succeeded by Jakarta EE. J2EE provided tools and APIs for building large-scale, distributed, and server-side applications, including web and enterprise systems. It introduced concepts like EJB (Enterprise JavaBeans) for building scalable, component-based applications.</span>
+                </span>
+            </div>
+            <div class="course-price">
+                <span id="price-3">₹3500</span>
+            </div>
+
+            <button class="btn btn-secondary subscribe-button" onclick="initiateStripePayment(2, 'Advance java-J2EE', 3500)">Pay</button>
+    </div>
+
+
+        </div>
+        <!----  <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                <input type="hidden" name="cmd" value="_s-xclick" />
+                <input type="hidden" name="hosted_button_id" value="JWEBTC8TJYE3U" />
+                <input type="hidden" name="currency_code" value="USD" />
+                <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_subscribe_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Subscribe" />
+              </form> --->
+
+
+
+        <!-- Add more courses as needed -->
+       <div class="course-card" data-course-id="3">
+            <div class="course-title" onclick="toggleCourseInfo(3)">Python</div>
+            <div class="course-description">
+                <span id="description-3">Python is a versatile, high-level programming language known for its readability and simplicity, making it an excellent choice for beginners. It supports a wide range of applications, including web development, data analysis, machine learning, and automation. Python's extensive standard library and large developer community contribute to its popularity and wide range of use cases.</span>
+            </div>
+            <div class="course-price">
+                <span id="price-3">₹2500</span>
+            </div>
+
+            <button class="btn btn-secondary subscribe-button" onclick="initiateStripePayment(3, 'Python', 2500)">Pay</button>
+    </div>
+
+
+        </div>
+
+        <!-- Display subscribed courses -->
+        <div class="student-courses" id="student-courses">
+            <div class="student-course-title">Subscribed Courses:</div>
+            <!-- Add subscribed course links dynamically -->
+        </div>
+    </div>
+
+
+   
+    <div class="footer">
+        &copy; 2023 Veena S. All rights reserved.
+    </div>
+
+    <script>
+        // JavaScript code for the student dashboard
+        function toggleCourseInfo(courseId) {
+            const courseDescription = document.getElementById(`description-${courseId}`);
+            courseDescription.style.display = courseDescription.style.display === 'none' ? 'block' : 'none';
+        }
+
+
+        
+    const stripe = Stripe('pk_test_51O7Jk4SHHUFwPR0jX83W4VwTS9Dq3bKQMHC8eSTYwaJx0LjTu3woLj3lWQggifBLKiY0uQCf940IdCaMYKhglKhb009qwtBzZs');
+
+    function initiateStripePayment(courseId, courseName, amount) {
+        // Create a Payment Intent on your server and obtain a client secret
+        // The server should verify the user's session and create the Payment Intent
+
+        fetch('/create-payment-intent', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                courseId: courseId,
+                amount: amount
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Redirect to the Stripe Checkout page with the client secret
+            return stripe.redirectToCheckout({ sessionId: data.clientSecret });
+        })
+        .then(result => {
+            // Handle the result of the redirection as needed
+        })
+        .catch(error => {
+            // Handle any errors that occur during the process
+            console.error(error);
+        });
+    }
+
+
+        function subscribeCourse(courseId) {
+            const courseCard = document.querySelector(`.course-card[data-course-id="${courseId}"]`);
+            if (courseCard) {
+                courseCard.style.display = 'none';
+
+                // Add the subscribed course link to the student's list of courses
+                const subscribedCourses = document.getElementById('student-courses');
+                const courseTitle = document.querySelector(`.course-card[data-course-id="${courseId}"] .course-title`);
+                const courseLink = document.createElement('a');
+                courseLink.href = '#'; // Add the actual course link here
+                courseLink.textContent = courseTitle.textContent;
+                courseLink.className = 'student-course-link';
+                subscribedCourses.appendChild(courseLink);
+            }
+        }
+
+        function searchCourses(query) {
+            const courseCards = document.querySelectorAll('.course-card');
+            for (const card of courseCards) {
+                const courseTitle = card.querySelector('.course-title');
+                if (courseTitle.textContent.toLowerCase().includes(query.toLowerCase())) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            }
+        }
+
+
+
+
+        function startNpm() {
+            window.location.href = "http://localhost:8888";
+            fetch('/start-npm', { method: 'GET' })
+                .then(response => {
+                    if (response.status === 200) {
+                        console.log('npm start initiated.');
+                        // Only change the window location if npm start was successful.
+
+
+
+
+                    } else {
+                        console.error('Failed to initiate npm start.');
+                    }
+                });
+        }
+
+
+
+
+
+    </script>
+</body>
+
+</html>
